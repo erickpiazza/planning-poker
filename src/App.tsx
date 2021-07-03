@@ -1,12 +1,17 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { AuthAnonymouslyProvider } from "./contexts/AuthAnonymouslyContext";
+import { Room } from "./pages/Room";
 import { Signin } from "./pages/Signin";
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Signin} />
-      </Switch>
+      <AuthAnonymouslyProvider>
+        <Switch>
+          <Route path="/" exact component={Signin} />
+          <Route path="/rooms/:id" exact component={Room} />
+        </Switch>
+      </AuthAnonymouslyProvider>
     </BrowserRouter>
   );
 }
