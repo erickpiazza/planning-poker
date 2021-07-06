@@ -10,6 +10,7 @@ export function Signin() {
   const history = useHistory();
   const [userName, setUserName] = useState("");
   const [roomName, setRoomName] = useState("");
+  const [roomKey, setRoomKey] = useState("");
   const { signInAnonymously, user } = useAuthAnonymously();
 
   async function createdPlayer(event: FormEvent) {
@@ -24,21 +25,39 @@ export function Signin() {
 
   async function createRoom(event: FormEvent) {
     event.preventDefault();
+
+    if (!roomName) {
+      return alert("Digite o nome da sala");
+    }
+
     const roomRef = database.ref("rooms");
     console.log("user >", user);
     const firebaseRoom = await roomRef.push({
       title: roomName,
       authorId: user?.id,
-      player: [{ name: user?.name, id: user?.id }],
+      players: { name: user?.name, id: user?.id },
     });
 
     console.log("response sala", firebaseRoom.key);
-    history.push(`admin/rooms/${firebaseRoom.key}`);
+    history.push(`rooms/${firebaseRoom.key}`);
+  }
+
+  async function enterTheRoom(event: FormEvent) {
+    event.preventDefault();
+    if (!roomKey) {
+      return alert("Digite a chave da sala");
+    }
+    console.log("chave da sala", roomKey);
+
+    await database
+      .ref(`rooms/${roomKey}/players`)
+      .push({ id: user?.id, name: user?.name });
+
+    history.push(`rooms/${roomKey}`);
   }
 
   return (
     <Container>
-      {console.log("usuario ", user)}
       <aside>
         <strong>Planning Poker</strong>
         <p>Scrum poker de forma simples e divertida</p>
@@ -62,7 +81,6 @@ export function Signin() {
             </>
           ) : (
             <>
-              {" "}
               <div className="separator">crie sua partida</div>
               <form onSubmit={createRoom}>
                 <input
@@ -76,18 +94,12 @@ export function Signin() {
                 </button>
               </form>
               <div className="separator">ou entre em uma partida</div>
-              <form onSubmit={() => {}}>
-                <input
-                  type="text"
-                  placeholder="Digite seu nick name"
-                  value={undefined}
-                  onChange={() => {}}
-                />
+              <form onSubmit={enterTheRoom}>
                 <input
                   type="text"
                   placeholder="Digite o código da sala"
-                  value={undefined}
-                  onChange={() => {}}
+                  value={roomKey}
+                  onChange={(e) => setRoomKey(e.target.value)}
                 />
                 <button type="submit" className="button-form">
                   Entrar na partida

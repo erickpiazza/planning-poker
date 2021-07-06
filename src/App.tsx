@@ -9,7 +9,7 @@ function App() {
       <AuthAnonymouslyProvider>
         <Switch>
           <Route path="/" exact component={Signin} />
-          <Route path="/rooms/:id" exact component={Room} />
+          <Route path="/rooms/:id" component={Room} />
         </Switch>
       </AuthAnonymouslyProvider>
     </BrowserRouter>
