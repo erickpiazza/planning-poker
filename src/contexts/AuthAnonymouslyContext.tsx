@@ -5,7 +5,7 @@ import { firebase } from "../services/firebase";
 
 type User = {
   id: string | undefined;
-  name: string;
+  name: string | undefined;
 };
 
 type AuthContextType = {
@@ -26,11 +26,8 @@ export function AuthAnonymouslyProvider(props: AuthContextProviderProps) {
     // https://firebase.google.com/docs/reference/js/firebase.User
     const unsubscribe = firebase.auth().onAuthStateChanged((userData) => {
       if (userData) {
-        console.log("teste user", user);
-        console.log("logged user", userData.uid);
         setUser({ id: userData.uid, name: nickName });
       } else {
-        console.log("não logado");
         firebase
           .auth()
           .signInAnonymously()
@@ -39,13 +36,9 @@ export function AuthAnonymouslyProvider(props: AuthContextProviderProps) {
               setUser({ id: userCreated.user?.uid, name: nickName });
             }
           })
-          .catch((error) => {
-            console.log("error", error);
-          });
-        console.log("criou login");
+          .catch((error) => {});
       }
     });
-    console.log("use contexto", user);
     unsubscribe();
 
     return;

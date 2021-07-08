@@ -31,14 +31,15 @@ export function Signin() {
     }
 
     const roomRef = database.ref("rooms");
-    console.log("user >", user);
     const firebaseRoom = await roomRef.push({
       title: roomName,
       authorId: user?.id,
-      players: { name: user?.name, id: user?.id },
     });
 
-    console.log("response sala", firebaseRoom.key);
+    await database
+      .ref(`rooms/${firebaseRoom.key}/players`)
+      .push({ id: user?.id, name: user?.name });
+
     history.push(`rooms/${firebaseRoom.key}`);
   }
 
@@ -47,7 +48,13 @@ export function Signin() {
     if (!roomKey) {
       return alert("Digite a chave da sala");
     }
-    console.log("chave da sala", roomKey);
+
+    const roomRef = await database.ref(`rooms/${roomKey}`).get();
+
+    if (!roomRef.exists()) {
+      alert("Sala não existe");
+      return;
+    }
 
     await database
       .ref(`rooms/${roomKey}/players`)
