@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import { HeaderComponent } from "../../components/Header/styles";
@@ -11,7 +12,12 @@ type RoomParams = {
 export function Room() {
   const params = useParams<RoomParams>();
   const roomId = params.id;
-  const { players, teste } = useRoom(roomId);
+  const { players } = useRoom(roomId);
+  const [flip, setFlip] = useState(false);
+
+  function teste() {
+    setFlip(!flip);
+  }
 
   return (
     <div>
@@ -28,7 +34,9 @@ export function Room() {
       >
         {players.map((player) => (
           <div>
-            <Card key={player.id} />
+            <Card key={player.id} flip={flip}>
+              {player.name}
+            </Card>
             <span>{player.name}</span>
           </div>
         ))}
