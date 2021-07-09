@@ -1,18 +1,23 @@
-import { ReactNode } from "react";
 import { Container } from "./styles";
 
 type CardProps = {
   key?: string;
-  children?: ReactNode;
+  cardValue?: string;
   flip?: boolean;
 };
 
-export default function Card({ key, children, flip = true }: CardProps) {
+export default function Card({ key, cardValue, flip = true }: CardProps) {
   return (
     <Container>
       <div className={`flip-container  ${flip ? "flip" : null}`}>
         <div className="flipper">
-          {children && <div className="front">{children}</div>}
+          {cardValue && (
+            <div className="front">
+              <div className="container">
+                <p>{cardValue}</p>
+              </div>
+            </div>
+          )}
 
           <div className="back">
             <div className="container">

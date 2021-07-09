@@ -12,8 +12,8 @@ export const Container = styled.div`
   .flip-container,
   .front,
   .back {
-    width: 140px;
-    height: 220px;
+    width: 92px;
+    height: 154px;
   }
 
   .flipper {
@@ -30,64 +30,73 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.55);
+    /* box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.55); */
+    box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.55);
   }
 
   .front {
     z-index: 2;
+    padding: 4px;
+
+    p {
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: normal;
+      font-family: "Roboto";
+    }
+  }
+
+  .container {
+    height: 100%;
+
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .back {
     transform: rotateY(180deg);
-    padding: 6px;
+    padding: 4px;
 
-    .container {
+    .circle-container {
+      background-color: #ffffff;
+      height: 60%;
+      width: 100%;
+      border-radius: 50%;
+      padding: 2px;
+    }
+    .circle-container-1 {
+      background-color: #475f94;
       height: 100%;
-
-      border: 2px solid #ffffff;
-      border-radius: 10px;
+      width: 100%;
+      border-radius: 50%;
       padding: 4px;
+    }
+    .circle-container-2 {
+      background-color: #ffffff;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      padding: 4px;
 
-      .circle-container {
-        background-color: #ffffff;
-        height: 125px;
-        width: 150px;
-        border-radius: 50%;
-        padding: 4px;
-      }
-      .circle-container-1 {
+      .divider {
+        height: 2px;
+        width: 100%;
         background-color: #475f94;
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        padding: 4px;
+        border-radius: 100px;
       }
-      .circle-container-2 {
-        background-color: #ffffff;
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 4px;
 
-        .divider {
-          height: 2px;
-          width: 100%;
-          background-color: #475f94;
-          border-radius: 100px;
-        }
-
-        p {
-          font-size: 24px;
-          font-weight: 500;
-          font-family: "Roboto";
-        }
+      p {
+        font-size: 16px;
+        font-weight: 500;
+        font-family: "Roboto";
       }
     }
   }
