@@ -1,3 +1,4 @@
+import { database } from "../../services/firebase";
 import Card from "../Card";
 
 const cardValues = [
@@ -16,11 +17,28 @@ const cardValues = [
   "?",
 ];
 
-export default function DeckPlayer() {
+type TDeckPlayerProps = {
+  roomId: string;
+  playerGameId: string;
+};
+
+export default function DeckPlayer({ playerGameId, roomId }: TDeckPlayerProps) {
+  async function teste(card: string) {
+    console.log("carta clicada foi", card);
+
+    await database.ref(`rooms/${roomId}/players/${playerGameId}`).update({
+      cardVote: card,
+    });
+  }
   return (
     <>
-      {cardValues.map((card) => (
-        <Card flip={false} cardValue={card} />
+      {cardValues.map((card, index) => (
+        <Card
+          key={`${index}`}
+          onClick={() => teste(card)}
+          flip={false}
+          cardValue={card}
+        />
       ))}
     </>
   );

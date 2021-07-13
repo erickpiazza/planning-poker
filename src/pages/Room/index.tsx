@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import DeckPlayer from "../../components/DeckPlayer";
@@ -13,7 +12,7 @@ type RoomParams = {
 export function Room() {
   const params = useParams<RoomParams>();
   const roomId = params.id;
-  const { players } = useRoom(roomId);
+  const { players, playerGame } = useRoom(roomId);
 
   return (
     <div>
@@ -29,9 +28,11 @@ export function Room() {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", gap: 4 }}>
-          <DeckPlayer />
-        </div>
+        {roomId && playerGame && (
+          <div style={{ display: "flex", gap: 4 }}>
+            <DeckPlayer roomId={roomId} playerGameId={playerGame?.gameId} />
+          </div>
+        )}
       </div>
     </div>
   );

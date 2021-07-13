@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+interface ContainerProps {
+  active?: boolean;
+}
+// https://styled-components.com/docs/api#using-custom-props
+export const Container = styled.div<ContainerProps>`
   .flip-container.flip .flipper {
     transform: rotateY(180deg);
   }
@@ -24,13 +28,15 @@ export const Container = styled.div`
 
   .front,
   .back {
-    background-color: #475f94;
+    cursor: pointer;
+    background-color: ${(props) =>
+      props.active === undefined || props.active ? "#475f94" : "#737380"};
     border-radius: 10px;
     backface-visibility: hidden;
     position: absolute;
     top: 0;
     left: 0;
-    /* box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.55); */
+
     box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.55);
   }
 
@@ -69,7 +75,8 @@ export const Container = styled.div`
       padding: 2px;
     }
     .circle-container-1 {
-      background-color: #475f94;
+      background-color: ${(props) =>
+        props.active === undefined || props.active ? "#475f94" : "#737380"};
       height: 100%;
       width: 100%;
       border-radius: 50%;
@@ -89,7 +96,8 @@ export const Container = styled.div`
       .divider {
         height: 2px;
         width: 100%;
-        background-color: #475f94;
+        background-color: ${(props) =>
+          props.active === undefined || props.active ? "#475f94" : "#737380"};
         border-radius: 100px;
       }
 

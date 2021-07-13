@@ -20,7 +20,7 @@ type TPlayer = {
 export function useRoom(roomId: string) {
   const { user } = useAuthAnonymously();
   const [players, setPlayers] = useState<TPlayer[]>([]);
-  const playerGame = players.find((player) => player.id === user?.id);
+  const [playerGame, setPlayerGame] = useState<TPlayer>();
 
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`);
@@ -38,6 +38,7 @@ export function useRoom(roomId: string) {
           };
         }
       );
+      console.log("parsedPlayers", parsedPlayers);
       setPlayers(parsedPlayers);
     });
 
@@ -46,11 +47,19 @@ export function useRoom(roomId: string) {
     };
   }, [roomId]);
 
+  useEffect(() => {
+    console.log("teste");
+    console.log("user?.id", user?.id);
+    const playerGame = players.find((player) => player.id === user?.id);
+    console.log("playerGame", playerGame);
+    setPlayerGame(playerGame);
+  }, [players, user, roomId]);
+
   async function teste() {
     await database.ref(`rooms/${roomId}/players/${playerGame?.gameId}`).update({
       name: "funcionou 3",
     });
   }
 
-  return { players, teste };
+  return { players, teste, playerGame };
 }
