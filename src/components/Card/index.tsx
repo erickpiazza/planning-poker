@@ -1,22 +1,20 @@
 import { Container } from "./styles";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  key?: string;
   cardValue?: string;
-  flip?: boolean;
+  showContent?: boolean;
   active?: boolean;
 }
 
 export default function Card({
-  key,
   cardValue,
-  flip = true,
+  showContent = true,
   active,
   ...rest
 }: CardProps) {
   return (
-    <Container key={key} active={active} {...rest}>
-      <div className={`flip-container  ${flip ? "flip" : null}`}>
+    <Container active={active} {...rest}>
+      <div className={`flip-container  ${showContent ? null : "flip"}`}>
         <div className="flipper">
           {cardValue && (
             <div className="front">

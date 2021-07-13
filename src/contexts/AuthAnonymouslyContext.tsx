@@ -44,6 +44,25 @@ export function AuthAnonymouslyProvider(props: AuthContextProviderProps) {
     return;
   }
 
+  // useEffect(() => {
+  //   const unsubscribe = firebase.auth().onAuthStateChanged((userData) => {
+  //     if (userData) {
+  //       setUser({ id: userData.uid, name: "" });
+  //     } else {
+  //       firebase
+  //         .auth()
+  //         .signInAnonymously()
+  //         .then((userCreated) => {
+  //           if (userCreated.user?.uid) {
+  //             setUser({ id: userCreated.user?.uid, name: "" });
+  //           }
+  //         })
+  //         .catch((error) => {});
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
+
   const _return: AuthContextType = {
     user,
     signInAnonymously,

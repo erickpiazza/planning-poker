@@ -20,25 +20,29 @@ const cardValues = [
 type TDeckPlayerProps = {
   roomId: string;
   playerGameId: string;
+  cardVote?: string;
 };
 
-export default function DeckPlayer({ playerGameId, roomId }: TDeckPlayerProps) {
-  async function teste(card: string) {
-    console.log("carta clicada foi", card);
-
-    await database.ref(`rooms/${roomId}/players/${playerGameId}`).update({
-      cardVote: card,
-    });
+export default function DeckPlayer({
+  playerGameId,
+  roomId,
+  cardVote,
+}: TDeckPlayerProps) {
+  async function vote(card: string) {
+    if (cardVote === card) {
+      await database
+        .ref(`rooms/${roomId}/players/${playerGameId}/cardVote`)
+        .remove();
+    } else {
+      await database.ref(`rooms/${roomId}/players/${playerGameId}`).update({
+        cardVote: card,
+      });
+    }
   }
   return (
     <>
       {cardValues.map((card, index) => (
-        <Card
-          key={`${index}`}
-          onClick={() => teste(card)}
-          flip={false}
-          cardValue={card}
-        />
+        <Card key={`${index}`} onClick={() => vote(card)} cardValue={card} />
       ))}
     </>
   );
